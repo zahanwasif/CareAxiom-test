@@ -19,3 +19,7 @@ Bonus done with RXJS control flow
 To Run:
 
 - yarn bonus
+
+<object data="Careaxiom Coding Test.pdf" type="application/pdf" width="700px" height="700px">
+
+</object>
