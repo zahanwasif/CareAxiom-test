@@ -19,9 +19,3 @@ Bonus done with RXJS control flow
 To Run:
 
 - yarn bonus
-
-<object data="https://github.com/zahanwasif/CareAxiom-test/blob/main/Careaxiom%20Coding%20Test.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="https://github.com/zahanwasif/CareAxiom-test/blob/main/Careaxiom%20Coding%20Test.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/zahanwasif/CareAxiom-test/blob/main/Careaxiom%20Coding%20Test.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
