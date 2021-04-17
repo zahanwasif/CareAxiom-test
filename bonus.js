@@ -1,42 +1,41 @@
 const express = require("express");
+const { from } = require("rxjs");
+const { map, mergeMap } = require("rxjs/operators");
 const Meta = require("html-metadata-parser");
+
 const app = express();
-const async = require("async");
 
 const PORT = 5000;
 
-const asyncFetch = (urls = [], responseCallback) => {
-	var response = [];
-	async.each(
-		urls,
-		(url, callback) => {
-			const modifiedUrl = url.split("://").pop();
-			Meta.parser(`https://${modifiedUrl}`, (err, res) => {
-				if (err) {
-					response.push(`<li> ${modifiedUrl} - NO RESPONSE </li>`);
-				} else {
-					response.push(`<li> ${modifiedUrl} - "${res.meta.title}" </li>`);
-				}
-				callback();
-			});
-		},
-		(err) => {
-			if (err) {
-			} else {
-				responseCallback(response);
-			}
-		}
+const rxjsImplemet = (urls, sendResp) => {
+	let urlsList = urls;
+	if (!Array.isArray(urls)) {
+		urlsList = [urls];
+	}
+	var listItems = [];
+	const observable = from(urlsList).pipe(
+		map((url) => {
+			return url.split("://").pop();
+		}),
+		mergeMap((url) =>
+			Meta.parser(`https://${url}`)
+				.then((result) => `<li>${url} - "${result.meta.title}"</li>`)
+				.catch(() => `<li>${url} - "NO RESPONSE"</li>`)
+		)
 	);
+	const observer = {
+		next: (data) => listItems.push(data),
+		error: (err) => console.log(err),
+		complete: () => sendResp(listItems),
+	};
+
+	observable.subscribe(observer);
 };
 
 app.get("/I/want/title/", (req, res) => {
 	let urls = req.query.address;
 	if (urls) {
-		var urlsList = urls;
-		if (!Array.isArray(urls)) {
-			urlsList = [urls];
-		}
-		asyncFetch(urlsList, (titles) => {
+		rxjsImplemet(urls, (titles) => {
 			res.send(`<html>
             <head></head>     
             <body>

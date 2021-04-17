@@ -1,27 +1,22 @@
 {
-	"name": "careaxion-test",
+	"name": "test",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"task1": "node task1.js",
+		"task2": "node task2.js",
+		"task3": "node task3.js",
+		"bonus": "node bonus.js"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/zahanwasif/CareAxiom-test.git"
-	},
-	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/zahanwasif/CareAxiom-test/issues"
-	},
-	"homepage": "https://github.com/zahanwasif/CareAxiom-test#readme",
 	"dependencies": {
 		"async": "^3.2.0",
 		"express": "^4.17.1",
 		"html-metadata-parser": "^1.0.3",
 		"rsvp": "^4.8.5",
 		"rxjs": "^6.6.7"
-	}
+	},
+	"author": "Zahan Wasif",
+	"license": "ISC"
 }
