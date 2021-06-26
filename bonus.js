@@ -1,6 +1,6 @@
 const express = require("express");
 const { from } = require("rxjs");
-const { map, mergeMap } = require("rxjs/operators");
+const { map, concatAll } = require("rxjs/operators");
 const Meta = require("html-metadata-parser");
 
 const app = express();
@@ -17,14 +17,17 @@ const rxjsImplemet = (urls, sendResp) => {
 		map((url) => {
 			return url.split("://").pop();
 		}),
-		mergeMap((url) =>
+		map((url) =>
 			Meta.parser(`https://${url}`)
 				.then((result) => `<li>${url} - "${result.meta.title}"</li>`)
 				.catch(() => `<li>${url} - "NO RESPONSE"</li>`)
-		)
+		),
+		concatAll()
 	);
 	const observer = {
-		next: (data) => listItems.push(data),
+		next: (data) => {
+			listItems.push(data);
+		},
 		error: (err) => console.log(err),
 		complete: () => sendResp(listItems),
 	};
